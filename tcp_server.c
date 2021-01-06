@@ -1,3 +1,9 @@
+/*
+	Midhun Nair
+	Updated Date: 6/1/2021 
+
+*/
+
 #include<sys/types.h>     //socket, bind, listen, accept API s
 #include<sys/socket.h>
 #include<unistd.h>        //read, write
@@ -94,8 +100,7 @@ int main(int argc, char *argv[])
     {
       perror("");
       exit(6);
-    }
-    
+    } 
     
     /****SENDING TO CLIENT****/
     
@@ -113,8 +118,7 @@ int main(int argc, char *argv[])
         }
       }
     }
-    
-    
+   
     /****RECEIVING FROM CLIENT****/
     
     if(retf == 0)
