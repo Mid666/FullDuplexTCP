@@ -20,12 +20,6 @@
 
 void SIGINT_HANDLER(int);
 
-void error(char *msg)
-{
-    perror(msg);
-    exit(1);
-}
-
 char sendbuffer[1024];      /*buffer to read and write */
 char receivebuffer[1024];
 int sockfd;
@@ -91,35 +85,35 @@ int main(int argc, char *argv[])
 	  {
 		  while(1)
 		  {
-            signal(SIGINT, SIGINT_HANDLER);
-			      bzero(&sendbuffer, sizeof(sendbuffer));
-			      fgets(sendbuffer, sizeof(sendbuffer), stdin);
-			      size_t sret = send(sockfd, sendbuffer, strlen(sendbuffer)+1, 0);
-			      if(sret < 0)
-			      {
-				      printf("\nsending failed..Try Again\n");
-			      }
+                  	signal(SIGINT, SIGINT_HANDLER);
+			bzero(&sendbuffer, sizeof(sendbuffer));
+			fgets(sendbuffer, sizeof(sendbuffer), stdin);
+			size_t sret = send(sockfd, sendbuffer, strlen(sendbuffer)+1, 0);
+			if(sret < 0)
+			{
+				printf("\nsending failed..Try Again\n");
+			}
 		  }
 	  }
 
-    if(retf == 0)    //receive from server
+    	if(retf == 0)    //receive from server
   	{
-        while(1)
-        {
-            bzero(&receivebuffer, sizeof(receivebuffer));
-            size_t rret = recv(sockfd, receivebuffer, sizeof(receivebuffer), 0);
-            if(!strcmp(receivebuffer, "\nServer Disconnected\n"))
-			      {
-				      printf("Server Lost Connection..\n");
-				      exit(0);
-			       }
-             if((signed long int)rret > 0)
-                printf("Server: %s\n", receivebuffer);
-        }
-    }
+        	while(1)
+        	{
+            		bzero(&receivebuffer, sizeof(receivebuffer));
+            		size_t rret = recv(sockfd, receivebuffer, sizeof(receivebuffer), 0);
+            		if(!strcmp(receivebuffer, "\nServer Disconnected\n"))
+			{
+				printf("Server Lost Connection..\n");
+				exit(0);
+			}
+             		if((signed long int)rret > 0)
+                	printf("Server: %s\n", receivebuffer);
+        	}
+    	}
  
-    close(sockfd);
-    return 0;
+    	close(sockfd);
+    	return 0;
 } 
 
 void SIGINT_HANDLER(int signum)
